@@ -1,7 +1,7 @@
 # SegmentWise
 
 <div align="center">
-  <img src="assets/thumb.png" alt="SegmentWise Logo" width="120" height="120">
+  <img src="Assets/thumb.png" alt="SegmentWise Logo" width="120" height="120">
 </div>
 
 SegmentWise is a professional desktop application designed for precise segmentation of biological images, with a particular focus on organoid and cell datasets. The software provides a streamlined environment that combines manual drawing tools, threshold-based segmentation, and integration with the Segment Anything Model (SAM) for semi-automated annotation.
@@ -11,7 +11,7 @@ The application is built to support the complete workflow of image annotation in
 By uniting these complementary approaches in a single interface, SegmentWise reduces the time and variability associated with biological image annotation, while maintaining full user control and transparency. It is intended to provide both flexibility for expert annotators and efficiency for large-scale studies.
 
 <div align="center">
-  <img src="assets/app_screenshot.png" alt="SegmentWise Application Screenshot" width="800">
+  <img src="Assets/app_screenshot.png" alt="SegmentWise Application Screenshot" width="800">
   <p><em>Screenshot of SegmentWise in use: an organoid image being segmented with AI-assisted annotation tools.</em></p>
 </div>
 

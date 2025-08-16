@@ -6,6 +6,7 @@ __pycache__/
 *.pth
 # Images
 *.png
+!Assets/thumb.png
 *.jpg
 *.jpeg
 *.bmp

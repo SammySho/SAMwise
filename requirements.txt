@@ -1,0 +1,9 @@
+--extra-index-url https://download.pytorch.org/whl/cu126
+PySide6==6.9.1
+numpy==2.2.6
+opencv-python==4.12.0.88
+scikit-image==0.25.2
+torch==2.7.1
+torchvision==0.22.1
+torchaudio==2.7.1
+segment-anything==1.0

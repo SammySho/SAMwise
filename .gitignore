@@ -7,6 +7,7 @@ __pycache__/
 # Images
 *.png
 !Assets/thumb.png
+!Assets/app_screenshot.png
 *.jpg
 *.jpeg
 *.bmp

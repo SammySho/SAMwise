@@ -1,5 +1,9 @@
 # SegmentWise
 
+<div align="center">
+  <img src="Assets/thumb.png" alt="SegmentWise Logo" width="120" height="120">
+</div>
+
 A professional desktop application for precise biological image segmentation using manual drawing tools, threshold-based segmentation, and the Segment Anything Model (SAM) for semi-automated annotation.
 
 ## Features
@@ -235,3 +239,4 @@ If you use SegmentWise in your research, please cite:
 - Meta AI for the Segment Anything Model
 - The Qt Company for PySide6
 - The scientific Python community for the excellent libraries that make this application possible
+- ChatGPT (OpenAI) for creating the application logo

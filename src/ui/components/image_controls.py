@@ -145,6 +145,16 @@ class ImageControls(QWidget):
         self.save_and_next_button.setEnabled(enabled)
         self.crop_mask_button.setEnabled(enabled)
     
+    def set_navigation_enabled(self, enabled):
+        """Enable/disable navigation controls based on image availability."""
+        self.prev_image_button.setEnabled(enabled)
+        self.next_image_button.setEnabled(enabled)
+        self.load_image_button.setEnabled(enabled)
+    
+    def set_crop_all_enabled(self, enabled):
+        """Enable/disable crop all button based on folder selection."""
+        self.crop_all_button.setEnabled(enabled)
+    
     def reset_image_info(self):
         """Reset image info when no image is loaded."""
         self.index_label.setText("Image index:")

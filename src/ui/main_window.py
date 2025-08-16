@@ -12,7 +12,7 @@ The main window integrates:
 - Experiment and folder management
 - Mask saving and export functionality
 """
-from PySide6.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QMessageBox)
+from PySide6.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QMessageBox, QSizePolicy)
 from PySide6.QtGui import QImage
 import numpy as np
 from ui.drawing_canvas import DrawingCanvas
@@ -32,7 +32,7 @@ class MainWindow(QMainWindow):
     
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Organoid Detection App")
+        self.setWindowTitle("Segment Wise")
         
         # Set up logging
         self.logger = get_logger(__name__)
@@ -68,6 +68,8 @@ class MainWindow(QMainWindow):
         # Core components
         self.canvas = DrawingCanvas()
         self.canvas.setMinimumSize(500, 500)
+        # Set size policy to expand in both directions
+        self.canvas.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         
         # UI component widgets
         self.experiment_manager = ExperimentManager(self.experiment_service)
@@ -92,9 +94,9 @@ class MainWindow(QMainWindow):
         
         # Right panel for canvas and controls
         right_panel = QVBoxLayout()
-        right_panel.addWidget(self.canvas)
-        right_panel.addWidget(self.image_info)
-        right_panel.addWidget(self.image_controls)
+        right_panel.addWidget(self.canvas, 1)  # Give canvas most of the space
+        right_panel.addWidget(self.image_info, 0)  # Fixed size for info
+        right_panel.addWidget(self.image_controls, 0)  # Fixed size for controls
         
         # Add panels to main layout
         main_layout.addLayout(left_panel, 1)
@@ -145,6 +147,10 @@ class MainWindow(QMainWindow):
         
         # Set initial viewing mode
         self.image_manager.set_viewing_mode("unlabelled")
+        
+        # Initialize button states
+        self.image_controls.set_crop_all_enabled(False)  # No folders selected initially
+        
         self.update_gui_no_image()
     
     def preload_sam_model(self):
@@ -175,6 +181,11 @@ class MainWindow(QMainWindow):
     def on_folders_changed(self, selected_folders):
         """Handle folder selection changes."""
         self.image_manager.set_selected_folders(selected_folders)
+        
+        # Enable/disable crop all button based on folder selection
+        has_folders = len(selected_folders) > 0
+        self.image_controls.set_crop_all_enabled(has_folders)
+        
         self.update_canvas_state()
 
     def on_image_source_toggled(self, mode):
@@ -397,6 +408,7 @@ class MainWindow(QMainWindow):
     def on_sam_marker_removed(self, event):
         """Handle SAM marker removal - regenerate mask with remaining markers."""
         if not self.sam_loaded:
+            self.logger.error("SAM model not loaded")
             return
         
         remaining_markers = event.data.get("markers", [])
@@ -407,7 +419,6 @@ class MainWindow(QMainWindow):
             self.apply_sam_with_markers(remaining_markers)
         else:
             # No markers left, clear the mask
-
             self.canvas.clearMask()
             self.on_mask_modified()
     
@@ -466,6 +477,8 @@ class MainWindow(QMainWindow):
             self.image_manager.get_num_images()
         )
         self.image_controls.set_image_controls_enabled(True)
+        self.image_controls.set_navigation_enabled(True)
+        self.drawing_tools.set_tools_enabled(True)
 
     def update_gui_no_image(self):
         """Update GUI when no image is loaded."""
@@ -491,6 +504,11 @@ class MainWindow(QMainWindow):
         self.canvas.displayPlaceholder(placeholder_type)
         self.canvas.clearMask()
         self.image_controls.set_image_controls_enabled(False)
+        self.drawing_tools.set_tools_enabled(False)
+        
+        # Disable navigation if no images available, but check if we have pools
+        has_images = self.image_manager.get_num_images() > 0
+        self.image_controls.set_navigation_enabled(has_images)
         
         # Reset save state
         self.mask_is_saved = True

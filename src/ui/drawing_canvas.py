@@ -42,6 +42,9 @@ class DrawingCanvas(QLabel):
         self.current_pos = QPoint()
         self.show_cursor = False
         
+        # Image state tracking
+        self.has_real_image = False  # True when real image loaded, False for placeholder
+        
         # Drawing properties
         self.penColor = Qt.blue
         self.penWidth = 25
@@ -102,18 +105,19 @@ class DrawingCanvas(QLabel):
             # Draw SAM markers
             self.draw_sam_markers(painter, rect)
         
-        # Draw the ghost cursor
-        if self.show_cursor and self.current_tool == ToolType.BRUSH:
-            cursor_radius = int(self.penWidth / 2 * self.scale_factor)
-            painter.setPen(QPen(Qt.red, 1, Qt.SolidLine))
-            painter.drawEllipse(self.current_pos, cursor_radius, cursor_radius)
-        elif self.show_cursor and self.current_tool == ToolType.MARKER:
-            # Draw crosshair for marker tool
-            painter.setPen(QPen(Qt.red, 2, Qt.SolidLine))
-            painter.drawLine(self.current_pos.x() - 10, self.current_pos.y(),
-                           self.current_pos.x() + 10, self.current_pos.y())
-            painter.drawLine(self.current_pos.x(), self.current_pos.y() - 10,
-                           self.current_pos.x(), self.current_pos.y() + 10)
+        # Draw the ghost cursor (only when real image is loaded)
+        if self.show_cursor and self.has_real_image:
+            if self.current_tool == ToolType.BRUSH:
+                cursor_radius = int(self.penWidth / 2 * self.scale_factor)
+                painter.setPen(QPen(Qt.red, 1, Qt.SolidLine))
+                painter.drawEllipse(self.current_pos, cursor_radius, cursor_radius)
+            elif self.current_tool == ToolType.MARKER:
+                # Draw crosshair for marker tool
+                painter.setPen(QPen(Qt.red, 2, Qt.SolidLine))
+                painter.drawLine(self.current_pos.x() - 10, self.current_pos.y(),
+                               self.current_pos.x() + 10, self.current_pos.y())
+                painter.drawLine(self.current_pos.x(), self.current_pos.y() - 10,
+                               self.current_pos.x(), self.current_pos.y() + 10)
 
     def draw_sam_markers(self, painter, image_rect):
         """Draw SAM markers on the canvas."""
@@ -131,6 +135,10 @@ class DrawingCanvas(QLabel):
 
     def mousePressEvent(self, event):
         """Handle mouse press events."""
+        # Block all drawing operations if no real image is loaded
+        if not self.has_real_image:
+            return
+            
         if self.current_tool == ToolType.BRUSH:
             if event.button() == Qt.LeftButton:
                 self.drawing = True
@@ -170,7 +178,7 @@ class DrawingCanvas(QLabel):
         self.current_pos = event.pos()
         self.show_cursor = True
         
-        if self.current_tool == ToolType.BRUSH and not self.mask.isNull():
+        if self.current_tool == ToolType.BRUSH and not self.mask.isNull() and self.has_real_image:
             if (event.buttons() & Qt.LeftButton) and self.drawing:
                 current_point = self.convert_to_image_coords(event.pos())
                 painter = QPainter(self.mask)
@@ -222,7 +230,7 @@ class DrawingCanvas(QLabel):
 
     def wheelEvent(self, event: QWheelEvent):
         """Handle wheel events for zooming toward cursor position."""
-        if self.image.isNull():
+        if not self.has_real_image:
             return
         
         # Get the mouse position in widget coordinates
@@ -261,10 +269,15 @@ class DrawingCanvas(QLabel):
         """Load an image."""
         self.image.load(filePath)
         if not self.image.isNull():
+            # Mark that we have a real image loaded
+            self.has_real_image = True
             # Auto-fit the image to canvas while respecting minimum zoom
             self.auto_fit_image()
             self.update_scaled_image()
             self.center_image()
+        else:
+            # Failed to load image
+            self.has_real_image = False
         self.update()
         
     def loadMask(self, filePath):
@@ -284,6 +297,8 @@ class DrawingCanvas(QLabel):
     def displayPlaceholder(self, message_type="default"):
         """Display placeholder image."""
         self.image = create_placeholder_image(500, 500, message_type)
+        # Mark that this is a placeholder, not a real image
+        self.has_real_image = False
         self.clearMask()
         self.update_scaled_image()
         self.update()
@@ -469,3 +484,7 @@ class DrawingCanvas(QLabel):
         """Clear all SAM markers."""
         self.sam_markers.clear()
         self.update()
+    
+    def has_image_loaded(self):
+        """Check if a real (non-placeholder) image is currently loaded."""
+        return self.has_real_image

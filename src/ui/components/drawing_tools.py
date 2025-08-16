@@ -209,3 +209,11 @@ class DrawingTools(QWidget):
     def is_auto_sam_enabled(self) -> bool:
         """Check if Auto SAM checkbox is enabled."""
         return self.auto_sam_checkbox.isChecked()
+    
+    def set_tools_enabled(self, enabled: bool):
+        """Enable/disable drawing tools based on image availability."""
+        self.brush_btn.setEnabled(enabled)
+        self.marker_btn.setEnabled(enabled)
+        self.auto_sam_checkbox.setEnabled(enabled)
+        self.threshold_button.setEnabled(enabled)
+        self.clear_btn.setEnabled(enabled)

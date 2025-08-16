@@ -126,7 +126,7 @@ project_root/
 - **Lazy SAM loading**: Models are loaded on-demand to improve startup time
 - **Smart pool management**: Image lists are refreshed intelligently to maintain accuracy
 - **Efficient rendering**: Optimized canvas operations for smooth interaction
-- **Memory management**: Automatic cleanup and garbage collection
+- **Memory management**: On-demand model cleanup with GPU memory optimization
 
 ### Error Handling & Logging
 - **Professional logging system**: Rotating log files with configurable levels

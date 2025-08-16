@@ -86,13 +86,13 @@ project_root/
 │           ├── 1.png
 │           ├── 2.png
 │           └── ...
-├── Labels/
+├── Labels/ (Automatically created)
 │   └── Experiment X/
 │       └── YYYYMMDD/
 │           ├── 1.png (masks)
 │           ├── 2.png
 │           └── ...
-├── Cropped/
+├── Cropped/ (Automatically created)
 │   └── Experiment X/
 │       └── YYYYMMDD/
 │           ├── 1.png (cropped images)

@@ -237,7 +237,7 @@ If you use SegmentWise in your research, please cite:
 ```bibtex
 @software{segmentwise2025,
   title={SegmentWise},
-  author={Sammy Shorthouse},
+  author={Sammy Shorthouse and Aya Elghajiji and Qiang Liu and James Armstrong},
   year={2025},
   url={https://github.com/SammySho/SegmentWise}
 }

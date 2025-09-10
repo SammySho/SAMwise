@@ -1,18 +1,18 @@
-# SegmentWise
+# SAMwise
 
 <div align="center">
-  <img src="Assets/thumb.png" alt="SegmentWise Logo" width="120" height="120">
+  <img src="Assets/thumb.png" alt="SAMwise Logo" width="120" height="120">
 </div>
 
-SegmentWise is a professional desktop application designed for precise segmentation of biological images, with a particular focus on organoid and cell datasets. The software provides a streamlined environment that combines manual drawing tools, threshold-based segmentation, and integration with the Segment Anything Model (SAM) for semi-automated annotation.
+SAMwise is a professional desktop application designed for precise segmentation of biological images, with a particular focus on organoid and cell datasets. The software provides a streamlined environment that combines manual drawing tools, threshold-based segmentation, and integration with the Segment Anything Model (SAM) for semi-automated annotation.
 
 The application is built to support the complete workflow of image annotation in research settings. It allows users to organise images by experiments and dates, manage labelled and unlabelled datasets, and track progress throughout the annotation process. Segmentation can be performed using manual brush tools, automatic thresholding, or AI-assisted methods such as marker-guided SAM and fully automated SAM predictions.
 
-By uniting these complementary approaches in a single interface, SegmentWise reduces the time and variability associated with biological image annotation, while maintaining full user control and transparency. It is intended to provide both flexibility for expert annotators and efficiency for large-scale studies.
+By uniting these complementary approaches in a single interface, SAMwise reduces the time and variability associated with biological image annotation, while maintaining full user control and transparency. It is intended to provide both flexibility for expert annotators and efficiency for large-scale studies.
 
 <div align="center">
-  <img src="Assets/app_screenshot.png" alt="SegmentWise Application Screenshot" width="800">
-  <p><em>Screenshot of SegmentWise in use: an organoid image being segmented with AI-assisted annotation tools.</em></p>
+  <img src="Assets/app_screenshot.png" alt="SAMwise Application Screenshot" width="800">
+  <p><em>Screenshot of SAMwise in use: an organoid image being segmented with AI-assisted annotation tools.</em></p>
 </div>
 
 ## Features
@@ -147,7 +147,7 @@ project_root/
 
 ### Project Structure
 ```
-segmentwise/
+SAMwise/
 ├── .gitignore                    # Git ignore patterns
 ├── README.md                     # Project documentation
 ├── requirements.txt              # Python dependencies
@@ -232,14 +232,14 @@ Contributions are welcome! Please feel free to submit pull requests or open issu
 
 ## Citation
 
-If you use SegmentWise in your research, please cite:
+If you use SAMwise in your research, please cite:
 
 ```bibtex
-@software{segmentwise2025,
-  title={SegmentWise},
+@software{SAMwise2025,
+  title={SAMwise},
   author={Sammy Shorthouse and Aya Elghajiji and Qiang Liu and James Armstrong},
   year={2025},
-  url={https://github.com/SammySho/SegmentWise}
+  url={https://github.com/SammySho/SAMwise}
 }
 ```
 

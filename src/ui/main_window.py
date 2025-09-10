@@ -32,7 +32,7 @@ class MainWindow(QMainWindow):
     
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Segment Wise")
+        self.setWindowTitle("SAMwise")
         
         # Set up logging
         self.logger = get_logger(__name__)

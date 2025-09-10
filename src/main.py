@@ -47,7 +47,7 @@ def main():
         app.setWindowIcon(icon)
         logger.info("Application icon set successfully")
     
-    logger.info("Starting Segment Wise")
+    logger.info("Starting SAMwise")
 
     # Create the main window
     window = MainWindow()
